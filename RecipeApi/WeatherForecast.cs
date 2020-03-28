@@ -1,6 +1,6 @@
 using System;
 
-namespace RecipeApi
+namespace PokemonApi
 {
     public class WeatherForecast
     {

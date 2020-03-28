@@ -1,14 +1,22 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using RecipeApi.Data;
-using RecipeApi.Data.Repositories;
-using RecipeApi.Models;
+using Microsoft.IdentityModel.Tokens;
+using NSwag;
+using NSwag.Generation.Processors.Security;
+using PokemonApi.Data;
+using PokemonApi.Data.Repositories;
+using PokemonApi.Models;
+using System.Linq;
+using System.Text;
+using System;
 
-namespace RecipeApi
+namespace PokemonApi
 {
     public class Startup
     {
@@ -23,17 +31,79 @@ namespace RecipeApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<RecipeContext>(options =>
-          options.UseSqlServer(Configuration.GetConnectionString("RecipeContext")));
+            services.AddDbContext<PokemonContext>(options =>
+          options.UseSqlServer(Configuration.GetConnectionString("PokemonContext")));
 
-            services.AddScoped<RecipeDataInitializer>();
-            services.AddScoped<IRecipeRepository, RecipeRepository>();
+            //services.AddScoped<PokemonDataInitializer>();
+            services.AddScoped<IPokemonRepository, PokemonRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+
+            services.AddIdentity<IdentityUser, IdentityRole>(cfg => cfg.User.RequireUniqueEmail = true).AddEntityFrameworkStores<PokemonContext>();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings.
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 1;
+
+                // Lockout settings.
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.AllowedForNewUsers = true;
+
+                // User settings.
+                options.User.AllowedUserNameCharacters =
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = true;
+            });
+
+
             // Register the Swagger services
             services.AddSwaggerDocument();
+            services.AddOpenApiDocument(c =>
+            {
+                c.DocumentName = "apidocs";
+                c.Title = "Pokemon API";
+                c.Version = "v1";
+                c.Description = "The Pokemon API documentation description";
+                c.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme 
+                { 
+                    Type = OpenApiSecuritySchemeType.ApiKey, 
+                    Name = "Authorization", 
+                    In = OpenApiSecurityApiKeyLocation.Header, 
+                    Description = "Type into the textbox: Bearer {your JWT token}." 
+                }); 
+                c.OperationProcessors.Add(new AspNetCoreOperationSecurityScopeProcessor("JWT"));
+            });
+            services.AddCors(options =>
+            options.AddPolicy("AllowAllOrigins", builder =>
+            builder.AllowAnyOrigin()));
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(x =>
+                {
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"])),
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        RequireExpirationTime = true
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RecipeDataInitializer recipeDataInitializer)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, PokemonDataInitializer pokemonDataInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -55,7 +125,10 @@ namespace RecipeApi
                 endpoints.MapControllers();
             });
 
-            recipeDataInitializer.InitializeData(); //.Wait();
+            //pokemonDataInitializer.InitializeData().Wait();
+            app.UseCors("AllowAllOrigins");
+
+            app.UseAuthentication();
         }
     }
 }
