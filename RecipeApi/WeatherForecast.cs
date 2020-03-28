@@ -1,6 +1,6 @@
 using System;
 
-namespace PokemonApi
+namespace MonsterApi
 {
     public class WeatherForecast
     {

@@ -9,14 +9,14 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using NSwag;
 using NSwag.Generation.Processors.Security;
-using PokemonApi.Data;
-using PokemonApi.Data.Repositories;
-using PokemonApi.Models;
+using MonsterApi.Data;
+using MonsterApi.Data.Repositories;
+using MonsterApi.Models;
 using System.Linq;
 using System.Text;
 using System;
 
-namespace PokemonApi
+namespace MonsterApi
 {
     public class Startup
     {
@@ -31,14 +31,14 @@ namespace PokemonApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<PokemonContext>(options =>
-          options.UseSqlServer(Configuration.GetConnectionString("PokemonContext")));
+            services.AddDbContext<MonsterContext>(options =>
+          options.UseSqlServer(Configuration.GetConnectionString("MonsterContext")));
 
-            //services.AddScoped<PokemonDataInitializer>();
-            services.AddScoped<IPokemonRepository, PokemonRepository>();
+            services.AddScoped<MonsterDataInitializer>();
+            services.AddScoped<IMonsterRepository, MonsterRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
 
-            services.AddIdentity<IdentityUser, IdentityRole>(cfg => cfg.User.RequireUniqueEmail = true).AddEntityFrameworkStores<PokemonContext>();
+            services.AddIdentity<IdentityUser, IdentityRole>(cfg => cfg.User.RequireUniqueEmail = true).AddEntityFrameworkStores<MonsterContext>();
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -67,9 +67,9 @@ namespace PokemonApi
             services.AddOpenApiDocument(c =>
             {
                 c.DocumentName = "apidocs";
-                c.Title = "Pokemon API";
+                c.Title = "Monster API";
                 c.Version = "v1";
-                c.Description = "The Pokemon API documentation description";
+                c.Description = "The Monster API documentation description";
                 c.AddSecurity("JWT", Enumerable.Empty<string>(), new OpenApiSecurityScheme 
                 { 
                     Type = OpenApiSecuritySchemeType.ApiKey, 
@@ -103,7 +103,7 @@ namespace PokemonApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, PokemonDataInitializer pokemonDataInitializer)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, MonsterDataInitializer monsterDataInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -125,7 +125,7 @@ namespace PokemonApi
                 endpoints.MapControllers();
             });
 
-            //pokemonDataInitializer.InitializeData().Wait();
+            monsterDataInitializer.InitializeData().Wait();
             app.UseCors("AllowAllOrigins");
 
             app.UseAuthentication();

@@ -6,19 +6,19 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Pokemon.DTO_s;
-using PokemonApi.Models;
+using Monster.DTO_s;
+using MonsterApi.Models;
 
-namespace Pokemon.Controllers
+namespace Monster.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PokemonController : ControllerBase
+    public class MonsterController : ControllerBase
     {
-        private readonly IPokemonRepository _pokemonRepository;
+        private readonly IMonsterRepository _monsterRepository;
         private readonly ICustomerRepository _customerRepository;
-        public PokemonController(IPokemonRepository context, ICustomerRepository customerRepository) {
-            _pokemonRepository = context;
+        public MonsterController(IMonsterRepository context, ICustomerRepository customerRepository) {
+            _monsterRepository = context;
             _customerRepository = customerRepository;
         }
 
@@ -28,8 +28,8 @@ namespace Pokemon.Controllers
         /// <returns>All Pokémon</returns>
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public IEnumerable<PokemonApi.Models.Pokemon> GetPokemon() {
-            return _pokemonRepository.GetAll().OrderBy(p => p.Id);
+        public IEnumerable<MonsterApi.Models.Monster> GetMonster() {
+            return _monsterRepository.GetAll().OrderBy(p => p.Id);
         }
 
         /// <summary>
@@ -39,49 +39,49 @@ namespace Pokemon.Controllers
         /// <returns>The Pokémon</returns>
         [HttpGet("{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public ActionResult<PokemonApi.Models.Pokemon> GetPokemon(int id) {
-            PokemonApi.Models.Pokemon pokemon = _pokemonRepository.GetBy(id);
-            if (pokemon == null) { return NotFound(); }
-            return pokemon;
+        public ActionResult<MonsterApi.Models.Monster> GetMonster(int id) {
+            MonsterApi.Models.Monster monster = _monsterRepository.GetBy(id);
+            if (monster == null) { return NotFound(); }
+            return monster;
         }
 
         [HttpGet("Favourites")]
-        public IEnumerable<PokemonApi.Models.Pokemon> GetFavourites()
+        public IEnumerable<MonsterApi.Models.Monster> GetFavourites()
         {
             Customer customer = _customerRepository.GetBy(User.Identity.Name);
-            return customer.FavouritePokemon;
+            return customer.FavouriteMonster;
         }
 
         /// <summary>
         /// Adds a Pokémon
         /// </summary>
-        /// <param name="pokemon">The Pokémon</param>
+        /// <param name="monster">The Pokémon</param>
         /// <returns>ActionResult</returns>
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public ActionResult<PokemonApi.Models.Pokemon> PostPokemon(PokemonDTO pokemon) {
-            PokemonApi.Models.Pokemon pokemonToCreate = new PokemonApi.Models.Pokemon() { Name = pokemon.Name, Description = pokemon.Description };
-            foreach (var m in pokemon.Moves) {
-                pokemonToCreate.AddMove(new Move(m.Name, m.PowerPoints, m.Accuracy, m.Effect, m.BasePower));
+        public ActionResult<MonsterApi.Models.Monster> PostMonster(MonsterDTO monster) {
+            MonsterApi.Models.Monster monsterToCreate = new MonsterApi.Models.Monster() { Name = monster.Name, Description = monster.Description };
+            foreach (var m in monster.Moves) {
+                monsterToCreate.AddMove(new Move(m.Name, m.PowerPoints, m.Accuracy, m.Effect, m.BasePower));
             }
-            _pokemonRepository.Add(pokemonToCreate);
-            _pokemonRepository.SaveChanges();
+            _monsterRepository.Add(monsterToCreate);
+            _monsterRepository.SaveChanges();
 
-            return CreatedAtAction(nameof(GetPokemon), new { id = pokemonToCreate.Id }, pokemon);
+            return CreatedAtAction(nameof(GetMonster), new { id = monsterToCreate.Id }, monster);
         }
 
         /// <summary>
         /// Puts a Pokémon at specific id
         /// </summary>
         /// <param name="id">The presumed id of the Pokémon</param>
-        /// <param name="pokemon">The Pokémon</param>
+        /// <param name="monster">The Pokémon</param>
         /// <returns>ActionResult</returns>
         [HttpPut("{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public IActionResult PutPokemon(int id, PokemonApi.Models.Pokemon pokemon) {
-            if (id != pokemon.Id) { return BadRequest(); }
-            _pokemonRepository.Update(pokemon);
-            _pokemonRepository.SaveChanges();
+        public IActionResult PutMonster(int id, MonsterApi.Models.Monster monster) {
+            if (id != monster.Id) { return BadRequest(); }
+            _monsterRepository.Update(monster);
+            _monsterRepository.SaveChanges();
             return NoContent();
         }
 
@@ -92,11 +92,11 @@ namespace Pokemon.Controllers
         /// <returns></returns>
         [HttpDelete("{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public IActionResult DeletePokemon(int id) {
-            PokemonApi.Models.Pokemon pokemon = _pokemonRepository.GetBy(id);
-            if (pokemon == null) { return NotFound(); }
-            _pokemonRepository.Delete(pokemon);
-            _pokemonRepository.SaveChanges();
+        public IActionResult DeleteMonster(int id) {
+            MonsterApi.Models.Monster monster = _monsterRepository.GetBy(id);
+            if (monster == null) { return NotFound(); }
+            _monsterRepository.Delete(monster);
+            _monsterRepository.SaveChanges();
             return NoContent();
         }
 
@@ -109,8 +109,8 @@ namespace Pokemon.Controllers
         [HttpGet("{id}/moves/{moveId}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public ActionResult<Move> GetMove(int id, int moveId) {
-            if (!_pokemonRepository.TryGetPokemon(id, out var pokemon)) { return NotFound(); }
-            Move m = pokemon.GetMove(moveId);
+            if (!_monsterRepository.TryGetMonster(id, out var monster)) { return NotFound(); }
+            Move m = monster.GetMove(moveId);
             if (m == null) { return NotFound(); }
             return m;
         }

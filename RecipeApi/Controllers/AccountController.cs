@@ -11,11 +11,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Pokemon.DTO_s;
-using PokemonApi.Models;
+using Monster.DTO_s;
+using MonsterApi.Models;
 using RecipeApi.DTOs;
 
-namespace Pokemon.Controllers
+namespace Monster.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

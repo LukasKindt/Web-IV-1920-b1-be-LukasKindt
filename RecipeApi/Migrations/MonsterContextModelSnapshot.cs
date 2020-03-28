@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PokemonApi.Data;
+using MonsterApi.Data;
 
-namespace Pokemon.Migrations
+namespace Monster.Migrations
 {
-    [DbContext(typeof(PokemonContext))]
-    partial class PokemonContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(MonsterContext))]
+    partial class MonsterContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -215,7 +215,7 @@ namespace Pokemon.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("PokemonApi.Models.Customer", b =>
+            modelBuilder.Entity("MonsterApi.Models.Customer", b =>
                 {
                     b.Property<int>("CustomerId")
                         .ValueGeneratedOnAdd()
@@ -242,22 +242,22 @@ namespace Pokemon.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("PokemonApi.Models.CustomerFavourite", b =>
+            modelBuilder.Entity("MonsterApi.Models.CustomerFavourite", b =>
                 {
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PokemonId")
+                    b.Property<int>("MonsterId")
                         .HasColumnType("int");
 
-                    b.HasKey("CustomerId", "PokemonId");
+                    b.HasKey("CustomerId", "MonsterId");
 
-                    b.HasIndex("PokemonId");
+                    b.HasIndex("MonsterId");
 
                     b.ToTable("CustomerFavourite");
                 });
 
-            modelBuilder.Entity("PokemonApi.Models.Move", b =>
+            modelBuilder.Entity("MonsterApi.Models.Move", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -280,7 +280,7 @@ namespace Pokemon.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<int>("PokemonId")
+                    b.Property<int>("MonsterId")
                         .HasColumnType("int");
 
                     b.Property<int>("PowerPoints")
@@ -288,7 +288,7 @@ namespace Pokemon.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PokemonId");
+                    b.HasIndex("MonsterId");
 
                     b.ToTable("Move");
 
@@ -300,7 +300,7 @@ namespace Pokemon.Migrations
                             BasePower = 90,
                             Effect = "The user stirs ip a violent blizzard and attacks everything around it.",
                             Name = "Petal Blizzard",
-                            PokemonId = 3,
+                            MonsterId = 3,
                             PowerPoints = 15
                         },
                         new
@@ -310,7 +310,7 @@ namespace Pokemon.Migrations
                             BasePower = 120,
                             Effect = "The user attacks the target by scattering petals for two or three turns. The user then becomes confused.",
                             Name = "Petal Dance",
-                            PokemonId = 3,
+                            MonsterId = 3,
                             PowerPoints = 10
                         },
                         new
@@ -320,7 +320,7 @@ namespace Pokemon.Migrations
                             BasePower = 40,
                             Effect = "A Physical attack in which the user charges and slams into the target with its whole body.",
                             Name = "Tackle",
-                            PokemonId = 3,
+                            MonsterId = 3,
                             PowerPoints = 35
                         },
                         new
@@ -330,7 +330,7 @@ namespace Pokemon.Migrations
                             BasePower = 0,
                             Effect = "The user growls in an endearing way, making opposing Pokémon less wary. This lowers their Attack stats.",
                             Name = "Growl",
-                            PokemonId = 3,
+                            MonsterId = 3,
                             PowerPoints = 40
                         },
                         new
@@ -340,7 +340,7 @@ namespace Pokemon.Migrations
                             BasePower = 75,
                             Effect = "The user attacks with a blade of air that slices even the sky. This may also make the target flinch.",
                             Name = "Air Slash",
-                            PokemonId = 6,
+                            MonsterId = 6,
                             PowerPoints = 15
                         },
                         new
@@ -350,7 +350,7 @@ namespace Pokemon.Migrations
                             BasePower = 80,
                             Effect = "The user slashes the target with huge sharp claws.",
                             Name = "Dragon Claw",
-                            PokemonId = 6,
+                            MonsterId = 6,
                             PowerPoints = 15
                         },
                         new
@@ -360,7 +360,7 @@ namespace Pokemon.Migrations
                             BasePower = 95,
                             Effect = "The user attacks by exhaling hot breath on opposing Pokémon. This may also leave those Pokémon with a burn.",
                             Name = "Heat Wave",
-                            PokemonId = 6,
+                            MonsterId = 6,
                             PowerPoints = 10
                         },
                         new
@@ -370,7 +370,7 @@ namespace Pokemon.Migrations
                             BasePower = 40,
                             Effect = "Hard, pointed, sharp claws rake the target to inflict damage.",
                             Name = "Scratch",
-                            PokemonId = 6,
+                            MonsterId = 6,
                             PowerPoints = 35
                         },
                         new
@@ -380,7 +380,7 @@ namespace Pokemon.Migrations
                             BasePower = 80,
                             Effect = "The user gathers all its light energy and releases it all at once. This may also lower the target's Sp. Def. stat.",
                             Name = "Flash Cannon",
-                            PokemonId = 9,
+                            MonsterId = 9,
                             PowerPoints = 10
                         },
                         new
@@ -390,7 +390,7 @@ namespace Pokemon.Migrations
                             BasePower = 40,
                             Effect = "A Physical attack in which the user charges and slams into the target with its whole body.",
                             Name = "Tackle",
-                            PokemonId = 9,
+                            MonsterId = 9,
                             PowerPoints = 35
                         },
                         new
@@ -400,7 +400,7 @@ namespace Pokemon.Migrations
                             BasePower = 0,
                             Effect = "The user wags its tail cutely, making opposing Pokémon less wary and lowering their Defense stats.",
                             Name = "Tail Whip",
-                            PokemonId = 9,
+                            MonsterId = 9,
                             PowerPoints = 30
                         },
                         new
@@ -410,12 +410,12 @@ namespace Pokemon.Migrations
                             BasePower = 40,
                             Effect = "The target is blasted with a forceful shot of water.",
                             Name = "Water Gun",
-                            PokemonId = 9,
+                            MonsterId = 9,
                             PowerPoints = 25
                         });
                 });
 
-            modelBuilder.Entity("PokemonApi.Models.Pokemon", b =>
+            modelBuilder.Entity("MonsterApi.Models.Monster", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -434,7 +434,7 @@ namespace Pokemon.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Pokemon");
+                    b.ToTable("Monster");
 
                     b.HasData(
                         new
@@ -544,26 +544,26 @@ namespace Pokemon.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PokemonApi.Models.CustomerFavourite", b =>
+            modelBuilder.Entity("MonsterApi.Models.CustomerFavourite", b =>
                 {
-                    b.HasOne("PokemonApi.Models.Customer", "Customer")
+                    b.HasOne("MonsterApi.Models.Customer", "Customer")
                         .WithMany("Favourites")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PokemonApi.Models.Pokemon", "Pokemon")
+                    b.HasOne("MonsterApi.Models.Monster", "Monster")
                         .WithMany()
-                        .HasForeignKey("PokemonId")
+                        .HasForeignKey("MonsterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PokemonApi.Models.Move", b =>
+            modelBuilder.Entity("MonsterApi.Models.Move", b =>
                 {
-                    b.HasOne("PokemonApi.Models.Pokemon", null)
+                    b.HasOne("MonsterApi.Models.Monster", null)
                         .WithMany("Moves")
-                        .HasForeignKey("PokemonId")
+                        .HasForeignKey("MonsterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

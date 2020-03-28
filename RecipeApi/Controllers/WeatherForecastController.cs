@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace PokemonApi.Controllers
+namespace MonsterApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]

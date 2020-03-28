@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using PokemonApi.Models;
+using MonsterApi.Models;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PokemonApi.Data
+namespace MonsterApi.Data
 {
-    public class PokemonDataInitializer
+    public class MonsterDataInitializer
     {
-        private readonly PokemonContext _dbContext;
+        private readonly MonsterContext _dbContext;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public PokemonDataInitializer(PokemonContext dbContext, UserManager<IdentityUser> userManager)
+        public MonsterDataInitializer(MonsterContext dbContext, UserManager<IdentityUser> userManager)
         {
             _dbContext = dbContext;
             _userManager = userManager;
@@ -21,13 +21,13 @@ namespace PokemonApi.Data
             _dbContext.Database.EnsureDeleted();
             if (_dbContext.Database.EnsureCreated())
             {
-                //seeding the database with pokemon, see DBContext         
-                Customer customer = new Customer { Email = "pokemonmaster@hogent.be", FirstName = "Adam", LastName = "Master" };
+                //seeding the database with monster, see DBContext         
+                Customer customer = new Customer { Email = "monstermaster@hogent.be", FirstName = "Monster", LastName = "Master" };
                 _dbContext.Customers.Add(customer);
                 await CreateUser(customer.Email, "P@ssword1111");
                 Customer student = new Customer { Email = "student@hogent.be", FirstName = "Student", LastName = "Hogent" };
                 _dbContext.Customers.Add(student);
-                student.AddFavouritePokemon(_dbContext.Pokemon.First());
+                student.AddFavouriteMonster(_dbContext.Monster.First());
                 await CreateUser(student.Email, "P@ssword1111");
                 _dbContext.SaveChanges();
             }

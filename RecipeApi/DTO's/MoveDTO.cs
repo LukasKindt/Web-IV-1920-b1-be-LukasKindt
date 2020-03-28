@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Pokemon.DTO_s
+namespace Monster.DTO_s
 {
     public class MoveDTO
     {

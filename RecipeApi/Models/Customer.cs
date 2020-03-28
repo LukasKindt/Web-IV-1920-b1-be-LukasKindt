@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace PokemonApi.Models
+namespace MonsterApi.Models
 {
     public class Customer
     {
@@ -17,7 +17,7 @@ namespace PokemonApi.Models
 
         public ICollection<CustomerFavourite> Favourites { get; private set; }
 
-        public IEnumerable<Pokemon> FavouritePokemon => Favourites.Select(f => f.Pokemon);
+        public IEnumerable<Monster> FavouriteMonster => Favourites.Select(f => f.Monster);
         #endregion
 
         #region Constructors
@@ -28,9 +28,9 @@ namespace PokemonApi.Models
         #endregion
 
         #region Methods
-        public void AddFavouritePokemon(Pokemon pokemon)
+        public void AddFavouriteMonster(Monster monster)
         {
-            Favourites.Add(new CustomerFavourite() { PokemonId = pokemon.Id, CustomerId = CustomerId, Pokemon = pokemon, Customer = this });
+            Favourites.Add(new CustomerFavourite() { MonsterId = monster.Id, CustomerId = CustomerId, Monster = monster, Customer = this });
         }
         #endregion
     }

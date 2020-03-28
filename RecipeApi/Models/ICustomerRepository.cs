@@ -1,4 +1,4 @@
-﻿namespace PokemonApi.Models
+﻿namespace MonsterApi.Models
 {
     public interface ICustomerRepository
     {

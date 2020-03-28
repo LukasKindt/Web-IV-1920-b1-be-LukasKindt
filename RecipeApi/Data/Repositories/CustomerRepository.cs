@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PokemonApi.Models;
+using MonsterApi.Models;
 using System.Linq;
 
-namespace PokemonApi.Data.Repositories
+namespace MonsterApi.Data.Repositories
 {
     public class CustomerRepository : ICustomerRepository
     {
-        private readonly PokemonContext _context;
+        private readonly MonsterContext _context;
         private readonly DbSet<Customer> _customers;
 
-        public CustomerRepository(PokemonContext dbContext)
+        public CustomerRepository(MonsterContext dbContext)
         {
             _context = dbContext;
             _customers = dbContext.Customers;
@@ -17,7 +17,7 @@ namespace PokemonApi.Data.Repositories
 
         public Customer GetBy(string email)
         {
-            return _customers.Include(c => c.Favourites).ThenInclude(f => f.Pokemon).ThenInclude(p => p.Moves).SingleOrDefault(c => c.Email == email);
+            return _customers.Include(c => c.Favourites).ThenInclude(f => f.Monster).ThenInclude(p => p.Moves).SingleOrDefault(c => c.Email == email);
         }
 
         public void Add(Customer customer)

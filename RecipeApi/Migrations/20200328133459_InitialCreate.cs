@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Pokemon.Migrations
+namespace Monster.Migrations
 {
     public partial class InitialCreate : Migration
     {
@@ -62,7 +62,7 @@ namespace Pokemon.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Pokemon",
+                name: "Monster",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -72,7 +72,7 @@ namespace Pokemon.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pokemon", x => x.Id);
+                    table.PrimaryKey("PK_Monster", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -186,11 +186,11 @@ namespace Pokemon.Migrations
                 columns: table => new
                 {
                     CustomerId = table.Column<int>(nullable: false),
-                    PokemonId = table.Column<int>(nullable: false)
+                    MonsterId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CustomerFavourite", x => new { x.CustomerId, x.PokemonId });
+                    table.PrimaryKey("PK_CustomerFavourite", x => new { x.CustomerId, x.MonsterId });
                     table.ForeignKey(
                         name: "FK_CustomerFavourite_Customers_CustomerId",
                         column: x => x.CustomerId,
@@ -198,9 +198,9 @@ namespace Pokemon.Migrations
                         principalColumn: "CustomerId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CustomerFavourite_Pokemon_PokemonId",
-                        column: x => x.PokemonId,
-                        principalTable: "Pokemon",
+                        name: "FK_CustomerFavourite_Monster_MonsterId",
+                        column: x => x.MonsterId,
+                        principalTable: "Monster",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -216,21 +216,21 @@ namespace Pokemon.Migrations
                     BasePower = table.Column<int>(nullable: false),
                     Accuracy = table.Column<int>(nullable: false),
                     Effect = table.Column<string>(maxLength: 256, nullable: false),
-                    PokemonId = table.Column<int>(nullable: false)
+                    MonsterId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Move", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Move_Pokemon_PokemonId",
-                        column: x => x.PokemonId,
-                        principalTable: "Pokemon",
+                        name: "FK_Move_Monster_MonsterId",
+                        column: x => x.MonsterId,
+                        principalTable: "Monster",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "Pokemon",
+                table: "Monster",
                 columns: new[] { "Id", "Description", "Name" },
                 values: new object[,]
                 {
@@ -247,7 +247,7 @@ namespace Pokemon.Migrations
 
             migrationBuilder.InsertData(
                 table: "Move",
-                columns: new[] { "Id", "Accuracy", "BasePower", "Effect", "Name", "PokemonId", "PowerPoints" },
+                columns: new[] { "Id", "Accuracy", "BasePower", "Effect", "Name", "MonsterId", "PowerPoints" },
                 values: new object[,]
                 {
                     { 1, 100, 90, "The user stirs ip a violent blizzard and attacks everything around it.", "Petal Blizzard", 3, 15 },
@@ -304,14 +304,14 @@ namespace Pokemon.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CustomerFavourite_PokemonId",
+                name: "IX_CustomerFavourite_MonsterId",
                 table: "CustomerFavourite",
-                column: "PokemonId");
+                column: "MonsterId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Move_PokemonId",
+                name: "IX_Move_MonsterId",
                 table: "Move",
-                column: "PokemonId");
+                column: "MonsterId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -347,7 +347,7 @@ namespace Pokemon.Migrations
                 name: "Customers");
 
             migrationBuilder.DropTable(
-                name: "Pokemon");
+                name: "Monster");
         }
     }
 }

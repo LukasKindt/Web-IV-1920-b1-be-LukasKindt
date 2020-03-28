@@ -1,4 +1,4 @@
-﻿using Pokemon.DTO_s;
+﻿using Monster.DTO_s;
 using System;
 using System.ComponentModel.DataAnnotations;
 
