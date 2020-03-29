@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MonsterApi.Models.Customer">
+    <Position X="8.75" Y="0.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAACAAAAIAAAQAAAAAAAAAABAAAAAAAAIAAAg=</HashCode>
+      <FileName>Models\Customer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="FavouriteMonster" />
+      <Property Name="Favourites" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="MonsterApi.Models.CustomerFavourite">
+    <Position X="12" Y="0.75" Width="1.5" />
+    <AssociationLine Name="Monster" Type="MonsterApi.Models.Monster" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="12.312" Y="2.046" />
+        <Point X="12.312" Y="4.562" />
+        <Point X="10.75" Y="4.562" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAEAAAAAAAABAAAgAAAAAAAAA=</HashCode>
+      <FileName>Models\CustomerFavourite.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Customer" />
+      <Property Name="Monster" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MonsterApi.Models.Monster">
+    <Position X="9.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAYAAgAAAAAAAAAAQBAIAAAEAAAEAAAgAAAAA=</HashCode>
+      <FileName>Models\Monster.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Moves" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="MonsterApi.Models.Move">
+    <Position X="12.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAiAAAAAAgAAAAAAAAIAAQAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Move.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
