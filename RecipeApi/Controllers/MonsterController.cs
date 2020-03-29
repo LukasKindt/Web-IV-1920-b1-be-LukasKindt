@@ -23,22 +23,22 @@ namespace Monster.Controllers
         }
 
         /// <summary>
-        /// Gets all Pokémon
+        /// Gets all Monsters
         /// </summary>
-        /// <returns>All Pokémon</returns>
+        /// <returns>All Monsters</returns>
         [HttpGet]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AllowAnonymous]
         public IEnumerable<MonsterApi.Models.Monster> GetMonster() {
             return _monsterRepository.GetAll().OrderBy(p => p.Id);
         }
 
         /// <summary>
-        /// Get the Pokémon with given id
+        /// Get the Monster with given id
         /// </summary>
-        /// <param name="id">The id of the Pokémon</param>
-        /// <returns>The Pokémon</returns>
+        /// <param name="id">The id of the Monster</param>
+        /// <returns>The Monster</returns>
         [HttpGet("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AllowAnonymous]
         public ActionResult<MonsterApi.Models.Monster> GetMonster(int id) {
             MonsterApi.Models.Monster monster = _monsterRepository.GetBy(id);
             if (monster == null) { return NotFound(); }
