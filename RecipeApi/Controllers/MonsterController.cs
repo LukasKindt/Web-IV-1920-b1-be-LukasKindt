@@ -58,7 +58,8 @@ namespace Monster.Controllers
         /// <param name="monster">The Monster</param>
         /// <returns>ActionResult</returns>
         [HttpPost]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AllowAnonymous]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public ActionResult<MonsterApi.Models.Monster> PostMonster(MonsterDTO monster) {
             MonsterApi.Models.Monster monsterToCreate = new MonsterApi.Models.Monster() { Name = monster.Name, Description = monster.Description };
             foreach (var m in monster.Moves) {
@@ -77,7 +78,8 @@ namespace Monster.Controllers
         /// <param name="monster">The Monster</param>
         /// <returns>ActionResult</returns>
         [HttpPut("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AllowAnonymous]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult PutMonster(int id, MonsterApi.Models.Monster monster) {
             if (id != monster.Id) { return BadRequest(); }
             _monsterRepository.Update(monster);
@@ -91,7 +93,8 @@ namespace Monster.Controllers
         /// <param name="id">the id of the Monster</param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AllowAnonymous]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult DeleteMonster(int id) {
             MonsterApi.Models.Monster monster = _monsterRepository.GetBy(id);
             if (monster == null) { return NotFound(); }
