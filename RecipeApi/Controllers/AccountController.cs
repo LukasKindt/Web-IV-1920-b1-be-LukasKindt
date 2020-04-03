@@ -35,6 +35,13 @@ namespace Monster.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet("checkusername")]
+        public async Task<ActionResult<Boolean>> checkAvailableUserName(string email) {
+            var user = await _userManager.FindByNameAsync(email);
+            return user == null;
+        }
+
+        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult<String>> CreateToken(LoginDTO model) {
             var user = await _userManager.FindByNameAsync(model.Email);

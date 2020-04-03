@@ -50,19 +50,43 @@ namespace MonsterApi.Data
             );
 
             builder.Entity<Move>().HasData(
-                    //Shadow property can be used for the foreign key, in combination with anonymous objects
-                    new { Id = 1, Name = "Petal Blizzard", PowerPoints = 15, BasePower = 90, Accuracy = 100, Effect = "The user stirs ip a violent blizzard and attacks everything around it.", MonsterId = 3 },
-                    new { Id = 2, Name = "Petal Dance", PowerPoints = 10, BasePower = 120, Accuracy = 100, Effect = "The user attacks the target by scattering petals for two or three turns. The user then becomes confused.", MonsterId = 3 },
-                    new { Id = 3, Name = "Tackle", PowerPoints = 35, BasePower = 40, Accuracy = 100, Effect = "A Physical attack in which the user charges and slams into the target with its whole body.", MonsterId = 3 },
-                    new { Id = 4, Name = "Growl", PowerPoints = 40, BasePower = 0, Accuracy = 100, Effect = "The user growls in an endearing way, making opposing Pokémon less wary. This lowers their Attack stats.", MonsterId = 3 },
-                    new { Id = 5, Name = "Air Slash", PowerPoints = 15, BasePower = 75, Accuracy = 95, Effect = "The user attacks with a blade of air that slices even the sky. This may also make the target flinch.", MonsterId = 6 },
-                    new { Id = 6, Name = "Dragon Claw", PowerPoints = 15, BasePower = 80, Accuracy = 100, Effect = "The user slashes the target with huge sharp claws.", MonsterId = 6 },
-                    new { Id = 7, Name = "Heat Wave", PowerPoints = 10, BasePower = 95, Accuracy = 90, Effect = "The user attacks by exhaling hot breath on opposing Pokémon. This may also leave those Pokémon with a burn.", MonsterId = 6 },
-                    new { Id = 8, Name = "Scratch", PowerPoints = 35, BasePower = 40, Accuracy = 100, Effect = "Hard, pointed, sharp claws rake the target to inflict damage.", MonsterId = 6 },
-                    new { Id = 9, Name = "Flash Cannon", PowerPoints = 10, BasePower = 80, Accuracy = 100, Effect = "The user gathers all its light energy and releases it all at once. This may also lower the target's Sp. Def. stat.", MonsterId = 9 },
-                    new { Id = 10, Name = "Tackle", PowerPoints = 35, BasePower = 40, Accuracy = 100, Effect = "A Physical attack in which the user charges and slams into the target with its whole body.", MonsterId = 9 },
-                    new { Id = 11, Name = "Tail Whip", PowerPoints = 30, BasePower = 0, Accuracy = 100, Effect = "The user wags its tail cutely, making opposing Pokémon less wary and lowering their Defense stats.", MonsterId = 9 },
-                    new { Id = 12, Name = "Water Gun", PowerPoints = 25, BasePower = 40, Accuracy = 100, Effect = "The target is blasted with a forceful shot of water.", MonsterId = 9 }
+                                        //Shadow property can be used for the foreign key, in combination with anonymous objects
+                    new { Id = 1, Name = "Tackle", PowerPoints = 35, BasePower = 40, Accuracy = 100, Effect = "An attack in which the user charges and slams into the target with its whole body.", MonsterId = 1 },
+                    new { Id = 2, Name = "Vine Whip", PowerPoints = 25, BasePower = 45, Accuracy = 100, Effect = "The target is struck with slender, whiplike viines to inflict damage.", MonsterId = 1 },
+                    new { Id = 3, Name = "Razor Leaf", PowerPoints = 25, BasePower = 55, Accuracy = 95, Effect = "Sharp-edged leaves are launched to slash at opposing Pokémon.", MonsterId = 1 },
+                    new { Id = 4, Name = "Seed Bomb", PowerPoints = 15, BasePower = 80, Accuracy = 100, Effect = "The user slams a barrage of hard-shelled seeds down on the target from above.", MonsterId = 1 },
+                    new { Id = 5, Name = "Tackle", PowerPoints = 35, BasePower = 40, Accuracy = 100, Effect = "An attack in which the user charges and slams into the target with its whole body.", MonsterId = 2 },
+                    new { Id = 6, Name = "Vine Whip", PowerPoints = 25, BasePower = 45, Accuracy = 100, Effect = "The target is struck with slender, whiplike viines to inflict damage.", MonsterId = 2 },
+                    new { Id = 7, Name = "Razor Leaf", PowerPoints = 25, BasePower = 55, Accuracy = 95, Effect = "Sharp-edged leaves are launched to slash at opposing Pokémon.", MonsterId = 2 },
+                    new { Id = 8, Name = "Seed Bomb", PowerPoints = 15, BasePower = 80, Accuracy = 100, Effect = "The user slams a barrage of hard-shelled seeds down on the target from above.", MonsterId = 2 },
+                    new { Id = 9, Name = "Petal Blizzard", PowerPoints = 15, BasePower = 90, Accuracy = 100, Effect = "The user stirs ip a violent blizzard and attacks everything around it.", MonsterId = 3 },
+                    new { Id = 10, Name = "Tackle", PowerPoints = 35, BasePower = 40, Accuracy = 100, Effect = "A Physical attack in which the user charges and slams into the target with its whole body.", MonsterId = 3 },
+                    new { Id = 11, Name = "Vine Whip", PowerPoints = 25, BasePower = 45, Accuracy = 100, Effect = "The target is struck with slender, whiplike viines to inflict damage.", MonsterId = 3 },
+                    new { Id = 12, Name = "Razor Leaf", PowerPoints = 25, BasePower = 55, Accuracy = 95, Effect = "Sharp-edged leaves are launched to slash at opposing Pokémon.", MonsterId = 3 },
+                    new { Id = 13, Name = "Scratch", PowerPoints = 35, BasePower = 40, Accuracy = 100, Effect = "Hard, pointed, sharp claws rake the target to inflict damage.", MonsterId = 4 },
+                    new { Id = 14, Name = "Fire Fang", PowerPoints = 15, BasePower = 65, Accuracy = 95, Effect = "The user bites with flame-cloaked fangs.", MonsterId = 4 },
+                    new { Id = 15, Name = "Slash", PowerPoints = 20, BasePower = 70, Accuracy = 100, Effect = "The target is attacked with a slash of claws or blades.", MonsterId = 4 },
+                    new { Id = 16, Name = "Flare Blitz", PowerPoints = 15, BasePower = 120, Accuracy = 100, Effect = "The user cloaks itself in fire and charges the target.", MonsterId = 4 },
+                    new { Id = 17, Name = "Scratch", PowerPoints = 35, BasePower = 40, Accuracy = 100, Effect = "Hard, pointed, sharp claws rake the target to inflict damage.", MonsterId = 5 },
+                    new { Id = 18, Name = "Fire Fang", PowerPoints = 15, BasePower = 65, Accuracy = 95, Effect = "The user bites with flame-cloaked fangs.", MonsterId = 5 },
+                    new { Id = 19, Name = "Slash", PowerPoints = 20, BasePower = 70, Accuracy = 100, Effect = "The target is attacked with a slash of claws or blades.", MonsterId = 5 },
+                    new { Id = 20, Name = "Flare Blitz", PowerPoints = 15, BasePower = 120, Accuracy = 100, Effect = "The user cloaks itself in fire and charges the target.", MonsterId = 5 },
+                    new { Id = 21, Name = "Dragon Claw", PowerPoints = 15, BasePower = 80, Accuracy = 100, Effect = "The user slashes the target with huge sharp claws.", MonsterId = 6 },
+                    new { Id = 22, Name = "Scratch", PowerPoints = 35, BasePower = 40, Accuracy = 100, Effect = "Hard, pointed, sharp claws rake the target to inflict damage.", MonsterId = 6 },
+                    new { Id = 23, Name = "Fire Fang", PowerPoints = 15, BasePower = 65, Accuracy = 95, Effect = "The user bites with flame-cloaked fangs.", MonsterId = 6 },
+                    new { Id = 24, Name = "Slash", PowerPoints = 20, BasePower = 70, Accuracy = 100, Effect = "The target is attacked with a slash of claws or blades.", MonsterId = 6 },
+                    new { Id = 25, Name = "Tackle", PowerPoints = 35, BasePower = 40, Accuracy = 100, Effect = "A Physical attack in which the user charges and slams into the target with its whole body.", MonsterId = 7 },
+                    new { Id = 26, Name = "Rapid Spin", PowerPoints = 40, BasePower = 50, Accuracy = 100, Effect = "A spin attack.", MonsterId = 7 },
+                    new { Id = 27, Name = "Bite", PowerPoints = 25, BasePower = 60, Accuracy = 100, Effect = "The target is bitten with viciously sharp fangs.", MonsterId = 7 },
+                    new { Id = 28, Name = "Aqua Tail", PowerPoints = 10, BasePower = 90, Accuracy = 90, Effect = "The user attacks by swinging its tail as if it were a vicious wave in a raging storm.", MonsterId = 7 },
+                    new { Id = 29, Name = "Tackle", PowerPoints = 35, BasePower = 40, Accuracy = 100, Effect = "A Physical attack in which the user charges and slams into the target with its whole body.", MonsterId = 8 },
+                    new { Id = 30, Name = "Rapid Spin", PowerPoints = 40, BasePower = 50, Accuracy = 100, Effect = "A spin attack.", MonsterId = 8 },
+                    new { Id = 31, Name = "Bite", PowerPoints = 25, BasePower = 60, Accuracy = 100, Effect = "The target is bitten with viciously sharp fangs.", MonsterId = 8 },
+                    new { Id = 32, Name = "Aqua Tail", PowerPoints = 10, BasePower = 90, Accuracy = 90, Effect = "The user attacks by swinging its tail as if it were a vicious wave in a raging storm.", MonsterId = 8 },
+                    new { Id = 33, Name = "Tackle", PowerPoints = 35, BasePower = 40, Accuracy = 100, Effect = "A Physical attack in which the user charges and slams into the target with its whole body.", MonsterId = 9 },
+                    new { Id = 34, Name = "Rapid Spin", PowerPoints = 40, BasePower = 50, Accuracy = 100, Effect = "A spin attack.", MonsterId = 9 },
+                    new { Id = 35, Name = "Bite", PowerPoints = 25, BasePower = 60, Accuracy = 100, Effect = "The target is bitten with viciously sharp fangs.", MonsterId = 9 },
+                    new { Id = 36, Name = "Aqua Tail", PowerPoints = 10, BasePower = 90, Accuracy = 90, Effect = "The user attacks by swinging its tail as if it were a vicious wave in a raging storm.", MonsterId = 9 }
             );
         }
 
