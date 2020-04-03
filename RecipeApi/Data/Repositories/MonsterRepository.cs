@@ -18,7 +18,7 @@ namespace MonsterApi.Data.Repositories
 
         public IEnumerable<Models.Monster> GetAll()
         {
-            return _monster.ToList();
+            return _monster.Include(r => r.Moves).ToList();
         }
 
         public Models.Monster GetBy(int id)

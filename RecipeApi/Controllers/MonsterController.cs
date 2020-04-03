@@ -53,9 +53,9 @@ namespace Monster.Controllers
         }
 
         /// <summary>
-        /// Adds a Pokémon
+        /// Adds a Monster
         /// </summary>
-        /// <param name="monster">The Pokémon</param>
+        /// <param name="monster">The Monster</param>
         /// <returns>ActionResult</returns>
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -71,10 +71,10 @@ namespace Monster.Controllers
         }
 
         /// <summary>
-        /// Puts a Pokémon at specific id
+        /// Puts a Monster at specific id
         /// </summary>
-        /// <param name="id">The presumed id of the Pokémon</param>
-        /// <param name="monster">The Pokémon</param>
+        /// <param name="id">The presumed id of the Monster</param>
+        /// <param name="monster">The Monster</param>
         /// <returns>ActionResult</returns>
         [HttpPut("{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -86,9 +86,9 @@ namespace Monster.Controllers
         }
 
         /// <summary>
-        /// Delete the Pokémon with given id
+        /// Delete the Monster with given id
         /// </summary>
-        /// <param name="id">the id of the Pokémon</param>
+        /// <param name="id">the id of the Monster</param>
         /// <returns></returns>
         [HttpDelete("{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -107,7 +107,7 @@ namespace Monster.Controllers
         /// <param name="moveId">the id of the move</param>
         /// <returns>the move</returns>
         [HttpGet("{id}/moves/{moveId}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AllowAnonymous]
         public ActionResult<Move> GetMove(int id, int moveId) {
             if (!_monsterRepository.TryGetMonster(id, out var monster)) { return NotFound(); }
             Move m = monster.GetMove(moveId);
