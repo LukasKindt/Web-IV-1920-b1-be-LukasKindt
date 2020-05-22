@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -17,9 +18,11 @@ namespace Monster.Controllers
     {
         private readonly IMonsterRepository _monsterRepository;
         private readonly ICustomerRepository _customerRepository;
-        public MonsterController(IMonsterRepository context, ICustomerRepository customerRepository) {
+        private readonly IImageRepository _imageRepository;
+        public MonsterController(IMonsterRepository context, ICustomerRepository customerRepository, IImageRepository imageRepository) {
             _monsterRepository = context;
             _customerRepository = customerRepository;
+            _imageRepository = imageRepository;
         }
 
         /// <summary>
@@ -28,8 +31,10 @@ namespace Monster.Controllers
         /// <returns>All Monsters</returns>
         [HttpGet]
         [AllowAnonymous]
-        public IEnumerable<MonsterApi.Models.Monster> GetMonster() {
-            return _monsterRepository.GetAll().OrderBy(p => p.Id);
+        public IEnumerable<MonsterApi.Models.Monster> GetMonster(string name = null) {
+            if (string.IsNullOrEmpty(name))
+                return _monsterRepository.GetAll().OrderBy(p => p.Id);
+            return _monsterRepository.GetBy(name);
         }
 
         /// <summary>
@@ -59,7 +64,7 @@ namespace Monster.Controllers
         /// <returns>ActionResult</returns>
         [HttpPost]
         [AllowAnonymous]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public ActionResult<MonsterApi.Models.Monster> PostMonster(MonsterDTO monster) {
             MonsterApi.Models.Monster monsterToCreate = new MonsterApi.Models.Monster() { Name = monster.Name, Description = monster.Description, Attack = monster.Attack, Defense = monster.Defense, HealthPoints = monster.HealthPoints, Speed = monster.Speed };
             foreach (var m in monster.Moves) {
@@ -67,8 +72,50 @@ namespace Monster.Controllers
             }
             _monsterRepository.Add(monsterToCreate);
             _monsterRepository.SaveChanges();
-
+            monster.id = monsterToCreate.Id;
             return CreatedAtAction(nameof(GetMonster), new { id = monsterToCreate.Id }, monster);
+        }
+
+        [HttpPost("addImage/{id}")]
+        [AllowAnonymous]
+        public ActionResult<String> AddImage(int id) {
+            IFormFile files = Request.Form.Files[0];
+            MonsterApi.Models.Monster monster = _monsterRepository.GetBy(id);
+
+            if (files != null) {
+                MemoryStream ms = new MemoryStream();
+                files.CopyTo(ms);
+                Image image = new Image
+                {
+                    ImageData = ms.ToArray(),
+                    Monster = monster,
+                    MonsterId = monster.Id
+                };
+                _imageRepository.addImage(image);
+                _imageRepository.saveChanges();
+
+                return Ok();
+            }
+            return BadRequest();
+        }
+
+        [HttpGet("getImage/{id}")]
+        [AllowAnonymous]
+        public ActionResult<Image> GetImage(int id) {
+            try
+            {
+                Image image = _imageRepository.GetByMonsterId(id);
+                ImageDTO imageDTO = new ImageDTO
+                {
+                    ImageData = image.ImageData,
+                    MonsterId = image.MonsterId
+                };
+                return Ok(imageDTO);
+            }
+            catch {
+                return Ok(null);
+            }
+            //if (image == null) { return NotFound(); }
         }
 
         /// <summary>
@@ -78,8 +125,8 @@ namespace Monster.Controllers
         /// <param name="monster">The Monster</param>
         /// <returns>ActionResult</returns>
         [HttpPut("{id}")]
-        [AllowAnonymous]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[AllowAnonymous]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult PutMonster(int id, MonsterApi.Models.Monster monster) {
             if (id != monster.Id) { return BadRequest(); }
             _monsterRepository.Update(monster);
@@ -94,7 +141,7 @@ namespace Monster.Controllers
         /// <returns></returns>
         [HttpDelete("{id}")]
         [AllowAnonymous]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult DeleteMonster(int id) {
             MonsterApi.Models.Monster monster = _monsterRepository.GetBy(id);
             if (monster == null) { return NotFound(); }

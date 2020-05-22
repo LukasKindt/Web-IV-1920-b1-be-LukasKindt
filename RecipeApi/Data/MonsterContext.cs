@@ -13,6 +13,7 @@ namespace MonsterApi.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+
             base.OnModelCreating(builder);
             builder.Entity<Models.Monster>()
                 .HasMany(p => p.Moves)
@@ -30,6 +31,8 @@ namespace MonsterApi.Data
             builder.Entity<Customer>().Property(c => c.FirstName).IsRequired().HasMaxLength(50);
             builder.Entity<Customer>().Property(c => c.Email).IsRequired().HasMaxLength(100);
             builder.Entity<Customer>().Ignore(c => c.FavouriteMonster);
+
+            builder.Entity<Image>().HasKey(i => i.Id);
 
             builder.Entity<CustomerFavourite>().HasKey(f => new { f.CustomerId, f.MonsterId });
             builder.Entity<CustomerFavourite>().HasOne(f => f.Customer).WithMany(u => u.Favourites).HasForeignKey(f => f.CustomerId);
@@ -88,9 +91,14 @@ namespace MonsterApi.Data
                     new { Id = 35, Name = "Bite", PowerPoints = 25, BasePower = 60, Accuracy = 100, Effect = "The target is bitten with viciously sharp fangs.", MonsterId = 9 },
                     new { Id = 36, Name = "Aqua Tail", PowerPoints = 10, BasePower = 90, Accuracy = 90, Effect = "The user attacks by swinging its tail as if it were a vicious wave in a raging storm.", MonsterId = 9 }
             );
+
+            /*builder.Entity<Customer>().HasData(
+                new Customer { CustomerId = 1, FirstName = "Lukas", LastName = "Kindt", Email="lukas.kindt@student.hogent.be" }
+            );*/
         }
 
         public DbSet<Models.Monster> Monster { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<Image> Images { get; set; }
     }
 }

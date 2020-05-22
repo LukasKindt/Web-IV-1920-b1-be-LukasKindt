@@ -11,6 +11,7 @@ namespace MonsterApi.Models
         void Delete(Monster monster);
         void Update(Monster monster);
         void SaveChanges();
+        public IEnumerable<Models.Monster> GetBy(string name = null);
     }
 }
 

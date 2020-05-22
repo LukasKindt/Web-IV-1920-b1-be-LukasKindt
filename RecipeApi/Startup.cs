@@ -32,11 +32,12 @@ namespace MonsterApi
         {
             services.AddControllers();
             services.AddDbContext<MonsterContext>(options =>
-          options.UseSqlServer(Configuration.GetConnectionString("MonsterContext")));
+          options.UseSqlServer(Configuration.GetConnectionString("MonsterContext"), options => options.EnableRetryOnFailure()));
 
             services.AddScoped<MonsterDataInitializer>();
             services.AddScoped<IMonsterRepository, MonsterRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<IImageRepository, ImageRepository>();
 
             services.AddIdentity<IdentityUser, IdentityRole>(cfg => cfg.User.RequireUniqueEmail = true).AddEntityFrameworkStores<MonsterContext>();
 
@@ -45,7 +46,10 @@ namespace MonsterApi
                 // Password settings.
                 options.Password.RequireDigit = true;
                 options.Password.RequireLowercase = true;
-                options.Password.RequireNonAlphanumeric = true;
+
+                //--Don't want to annoy users too much
+                options.Password.RequireNonAlphanumeric = false;
+                
                 options.Password.RequireUppercase = true;
                 options.Password.RequiredLength = 6;
                 options.Password.RequiredUniqueChars = 1;

@@ -51,5 +51,12 @@ namespace MonsterApi.Data.Repositories
         {
             _context.SaveChanges();
         }
+
+        public IEnumerable<Models.Monster> GetBy(string name = null) {
+            var monsters = _context.Monster.Include(m => m.Moves).AsQueryable();
+            if (!string.IsNullOrEmpty(name))
+                monsters = monsters.Where(m => m.Name.IndexOf(name) >= 0);
+            return monsters.OrderBy(m => m.Name).ToList();
+        }
      }
 }

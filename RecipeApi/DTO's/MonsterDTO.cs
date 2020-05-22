@@ -8,6 +8,7 @@ namespace Monster.DTO_s
 {
     public class MonsterDTO
     {
+        public int id { get; set; }
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }
